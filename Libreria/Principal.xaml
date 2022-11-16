@@ -1,0 +1,102 @@
+﻿<Window x:Class="Libreria.Principal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Libreria"
+        mc:Ignorable="d"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+         xmlns:MaterialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Principal" Height="600" Width="1200" MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStyle="None">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="Purple">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnMinimizar" BorderBrush="Transparent" Background="Transparent" Click="btnMinimizar_Click">
+                    <MaterialDesign:PackIcon Kind="WindowMinimize"/>
+                </Button>
+                <Button x:Name="btnMaximizar" BorderBrush="Transparent" Background="Transparent" Click="btnMaximizar_Click">
+                    <MaterialDesign:PackIcon Kind="WindowMaximize"/>
+                </Button>
+                <Button x:Name="btnCerrar_sesion" BorderBrush="Transparent" Background="Transparent" Click="btnCerrar_sesion_Click">
+                    <MaterialDesign:PackIcon Kind="AccountOff"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Background="DarkViolet">
+                <StackPanel>
+                    <StackPanel x:Name="SPCasa">
+                        <Button x:Name="btnCasa" BorderBrush="Transparent" Background="Transparent" Click="btnCasa_Click">
+                            <MaterialDesign:PackIcon Kind="Home"/>
+                        </Button>
+                        <Label Content="Inicio" BorderBrush="Transparent" Background="Transparent" HorizontalContentAlignment="Center" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SPVender">
+                        <Button x:Name="btnVender" Background="Transparent" BorderBrush="Transparent" Click="btnVender_Click">
+                            <MaterialDesign:PackIcon Kind="Shop"/>
+                        </Button>
+                        <Label Content="Vender" FontSize="10" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Center" Foreground="White"></Label>
+                    </StackPanel >
+                    <StackPanel x:Name="SPEncargar">
+                        <Button x:Name="btnEncargar" Background="Transparent" BorderBrush="Transparent" Click="btnEncargar_Click">
+                            <MaterialDesign:PackIcon Kind="PackageVariantAdd"/>
+                        </Button>
+                        <Label Content="Encargar" Foreground="White"  FontSize="10" HorizontalAlignment="Center" Background="Transparent"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SPRegisVenta">
+                        <Button x:Name="btnRegistro_Ventas" Background="Transparent" BorderBrush="Transparent" Click="btnRegistro_Ventas_Click">
+                            <MaterialDesign:PackIcon Kind="ShopSchedule"/>
+                        </Button>
+                        <Label Content="Registros de Venta" Foreground="White" FontSize="6"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="SPRegisEncargo">
+                        <Button x:Name="btnRegistro_Encargo" Background="Transparent" BorderBrush="Transparent" Click="btnRegistro_Encargo_Click">
+                            <MaterialDesign:PackIcon Kind="PackageVariantClosedCheck"/>
+                        </Button>
+                        <Label Content="Registros de Encargos" Foreground="White" FontSize="5"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="SPRegiSProducto">
+                        <Button x:Name="btnRegistrar_producto" Background="Transparent" BorderBrush="Transparent" Click="btnRegistrar_producto_Click">
+                            <MaterialDesign:PackIcon Kind="PackageDelivered"/>
+                        </Button>
+                        <Label Content="Registros producto" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="6" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="SPCRegisCli">
+                        <Button x:Name="btnRegistro_Clientes" Background="Transparent" BorderBrush="Transparent" Click="btnRegistro_Clientes_Click">
+                            <MaterialDesign:PackIcon Kind="PersonBox"/>
+                        </Button>
+                        <Label Content="Registros de Clientes" Foreground="White" FontSize="5"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="SPEmpleado">
+                        <Button x:Name="btnRegistro_Empleados" Background="Transparent" BorderBrush="Transparent" Click="btnRegistro_Empleados_Click">
+                            <MaterialDesign:PackIcon Kind="AccountBoxes"/>
+                        </Button>
+                        <Label Content="Registro de empleados" FontSize="5" Foreground="White"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="SPregiUsuario">
+                        <Button x:Name="btnRegistro_Usuario" Background="Transparent" BorderBrush="Transparent" Click="btnRegistro_Usuario_Click">
+                            <MaterialDesign:PackIcon Kind="AccountSettings"/>
+                        </Button>
+                        <Label Content="Registros usuario" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="6" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="GridPadre" Grid.Column="1">
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

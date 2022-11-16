@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="Libreria.Gestion_Empleado"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Libreria"
+             mc:Ignorable="d" 
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="15"
+             TextOptions.TextFormattingMode="Ideal"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             xmlns:MaterialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Registro de Empleado" HorizontalAlignment="Center" FontSize="16"/>
+        </StackPanel>
+        <Grid  Margin="5,20,5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="355"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="5">
+
+                <StackPanel>
+                    <TextBlock Text="Información del Empleado" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="txtPrimer_nombre"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Primer Nombre"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtSegundo_nombre"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Segundo Nombre"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtPrimer_apellido"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Primer Apellido"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtSegundo_apellido"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Segundo Apellidp"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtTelefono"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Telefono"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtDireccion"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Dirección"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtTitulo" Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Titulo"
+                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0 5">
+                        <Button x:Name="btnNuevo" Content="Nuevo" Margin="5" Click="btnNuevo_Click"></Button>
+                        <Button x:Name="btnEditar" Content="Editar" Margin="5" Click="btnEditar_Click"></Button>
+                        <Button x:Name="btnEliminar" Content="Eliminar" Margin="5" Click="btnEliminar_Click"/>
+                        <Button x:Name="btnCargar" Content="Cargar" Margin="5" Click="btnCargar_Click"></Button>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <TextBlock Text="Buscador de Empleados" HorizontalAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Empleado: " Margin="0,0,15,0" VerticalAlignment="Center" FontSize="16"/>
+                        <TextBox x:Name="txtBuscar_nombre" Width="250" MaterialDesign:HintAssist.Hint="Primer Nombre de empleado" FontSize="15"
+                                      MaterialDesign:HintAssist.IsFloating="True" Margin="10,0,40,0" ></TextBox>
+                        <Button x:Name="btnBuscar" Height="30" Width="45" Click="btnBuscar_Click" Margin="5,0,5,0">
+                            <MaterialDesign:PackIcon Kind="Search" Width="14" Height="14"/>
+                        </Button>
+                        <Button x:Name="btnRefrescar" Click="btnRefrescar_Click" Height="30" Width="45" HorizontalAlignment="Right">
+                            <MaterialDesign:PackIcon Kind="Reload" Width="14" Height="14"/>
+                        </Button>
+                    </StackPanel>
+                    <DataGrid x:Name="dgEmpleados" IsReadOnly="True" Height="450" AutoGenerateColumns="False" Foreground="White" Background="WhiteSmoke"
+                                  HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Margin="10 0">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#FFF161F1"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Height" Value="20"/>
+                                <Setter Property="BorderBrush" Value="White"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="colPrimer_Nombre" Header="_Primer Nombre" Width="150" Binding="{Binding Primer_Nombre}"/>
+                            <DataGridTextColumn x:Name="colSegundo_Nombre" Header="_Segundo Nombre" Width="150" Binding="{Binding Segundo_Nombre}"/>
+                            <DataGridTextColumn x:Name="colPrimer_Apellido" Header="_Primer Apellido" Width="150" Binding="{Binding Primer_Apellido}"/>
+                            <DataGridTextColumn x:Name="colSegundo_Apellido" Header="_Segundo Apellido" Width="150" Binding="{Binding Segundo_Apellido}"/>
+                            <DataGridTextColumn x:Name="colTelefono" Header="_Telefono" Width="80" Binding="{Binding Telefono}"/>
+                            <DataGridTextColumn x:Name="colDireccion" Header="_Direccion" Width="200" Binding="{Binding Direccion}"/>
+                            <DataGridTextColumn x:Name="colUsuario" Header="_Usuario" Width="150" Binding="{Binding Usuario}"/>
+                            <DataGridTextColumn x:Name="colPassword" Header="_Contraseña" Width="100" Binding="{Binding Password}"/>
+                            <DataGridTextColumn x:Name="colCargo" Header="_Cargo" Width="100" Binding="{Binding Cargo}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

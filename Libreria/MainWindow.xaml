@@ -1,0 +1,54 @@
+﻿<Window x:Class="Libreria.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Libreria"
+        mc:Ignorable="d"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="MainWindow" Height="450" Width="800"  xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"  WindowStyle="None" AllowsTransparency="True" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="Transparent">
+            <Grid Height="30" Background="Purple">
+                <Button x:Name="btnCerrar" Background="Transparent" Height="30" Click="btnCerrar_Click" FontSize="15" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="5 0">
+                    <materialDesign:PackIcon Kind="WindowClose"/>
+                </Button>
+                <Button x:Name="btnMinimizar" Background="Transparent" Height="30" Click="btnMinimizar_Click" FontSize="15" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="50 0">
+                    <materialDesign:PackIcon Kind="WindowMinimize" />
+                </Button>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1" Background="DarkViolet">
+            <TextBlock Text="Bienvenido" FontSize="35" Foreground="White" Margin="10" HorizontalAlignment="Center" FontFamily="Segoe UI"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel Orientation="Vertical" Margin="20 5">
+                <StackPanel Orientation="Horizontal" Margin="10 0">
+                    <materialDesign:PackIcon Kind="Account" Width="35" Foreground="{Binding ElementName=txtUsuario, Path=BorderBrush}" Margin="0 5" Height="35" VerticalAlignment="Center" />
+                    <TextBox x:Name="txtUsuario" Height="auto" Width="300" materialDesign:HintAssist.Hint="Usuario" materialDesign:HintAssist.IsFloating="True" FontSize="20" KeyDown="txtUsuario_KeyDown"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10 20">
+                    <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=txtPasword,Path=BorderBrush}" Width="35" Height="35" Margin="0 5" VerticalAlignment="Center"/>
+                    <PasswordBox x:Name="txtPasword" Height="50" Width="300" materialDesign:HintAssist.Hint="Contraseña" materialDesign:HintAssist.IsFloating="True" FontSize="20" KeyDown="txtPasword_KeyDown"/>
+                </StackPanel>
+
+                <Button x:Name="btnEntrar" BorderBrush="Transparent" Content="Entrar" Background="DarkViolet" Width="100" Height="40" HorizontalAlignment="Right" Margin="10 30" FontSize="20" Click="btnEntrar_Click"/>
+                <Label x:Name="lbInfo" FontSize="15" Content="" Height="25" Width="280" HorizontalAlignment="Right" Margin="30 10" VerticalAlignment="Top"/>
+                <ProgressBar x:Name="pbProgress" Height="30" Width="400" Margin="20 0" Visibility="Hidden" ValueChanged="pbProgress_ValueChanged"/>
+                <Label Name="lbCarga" FontSize="15" Visibility="Hidden" Height="500"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

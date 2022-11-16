@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="Libreria.Gestion_Cliente"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Libreria"
+             mc:Ignorable="d" 
+               TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="15"
+             TextOptions.TextFormattingMode="Ideal"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             xmlns:MaterialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Registro de Clientes" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" FontSize="20"/>
+        </StackPanel>
+        <Grid Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Informacion del Cliente" HorizontalAlignment="Center" Margin="0 10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtPrimer_Nombre" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Primer Nombre" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                        <TextBox x:Name="txtNombre_Cliente" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Nombre del Cliente" MaterialDesign:HintAssist.IsFloating="True" Visibility="Hidden"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtSegundo_Nombre" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Segundo Nombre" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                        <TextBox x:Name="txtNombre_Represetante" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Nombre del representante" MaterialDesign:HintAssist.IsFloating="True" Visibility="Hidden"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtPrimer_Apellido" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Primer Apellido" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                        <TextBox x:Name="txtApellido_Represetante" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Apellido del representante" MaterialDesign:HintAssist.IsFloating="True" Visibility="Hidden"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtSegundo_Apellido" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Segundo Apellido" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                        <TextBox x:Name="txtFechaConstitucion" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                     MaterialDesign:HintAssist.Hint="Nombre del Cliente" MaterialDesign:HintAssist.IsFloating="True" Visibility="Hidden"></TextBox>
+                    </StackPanel>
+                    <TextBox x:Name="txtEmail" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                 MaterialDesign:HintAssist.Hint="Correo electronico" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    <TextBox x:Name="txtTelefono" Height="50" Width="200" HorizontalAlignment="Left" Margin="5 0"
+                                 MaterialDesign:HintAssist.Hint="Telefono" MaterialDesign:HintAssist.IsFloating="True"></TextBox>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0 10">
+                        <Button x:Name="btnEditar" Content="Editar" IsEnabled="False" FontSize="12" Margin="5 0" Click="btnEditar_Click"></Button>
+                        <Button x:Name="btnCargar" Content="Cargar" FontSize="12" Margin="5 0" Click="btnCargar_Click"></Button>
+                        <Button x:Name="btnEliminar" Content="Eliminar" FontSize="12" Margin="5 0" Click="btnEliminar_Click" />
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Buscador de Clientes" HorizontalAlignment="Center" Margin="0 10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="txtBuscar_Nombre" Width="200" MaterialDesign:HintAssist.Hint="Nombre del Cliente" MaterialDesign:HintAssist.IsFloating="True"
+                                     FontSize="14" Text=""/>
+                        <Button x:Name="btnBuscar" Content="Buscar" FontSize="12" Click="btnBuscar_Click" Margin="5 0"></Button>
+                        <Button x:Name="btnNatural" Content="Natural" FontSize="12" Click="btnNatural_Click" Margin="5 0" IsEnabled="False"/>
+                        <Button x:Name="btnJuridico" Content="Juridico" FontSize="12" Click="btnJuridico_Click" Margin="5 0"/>
+                        <Button x:Name="btnRefrescar" Margin="5 0" Click="btnRefrescar_Click">
+                            <MaterialDesign:PackIcon Kind="Reload"/>
+                        </Button>
+                    </StackPanel>
+                    <DataGrid x:Name="dgClientes" IsReadOnly="True" Height="400" Margin="5" Foreground="White" Background="WhiteSmoke">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="Gray"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Height" Value="20"/>
+                                <Setter Property="BorderBrush" Value="White"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Style>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
