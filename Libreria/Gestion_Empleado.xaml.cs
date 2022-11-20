@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Libreria.Data;
+using Libreria.Data.MainModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,26 @@ namespace Libreria
     /// </summary>
     public partial class Gestion_Empleado : UserControl
     {
-        public Gestion_Empleado()
+        private readonly LibreriaContext _libreriaContext;
+        private readonly IRepository<Empleado> _repository;
+
+        public Gestion_Empleado(LibreriaContext libreriaContext, IRepository<Empleado> repository)
         {
             InitializeComponent();
+            _libreriaContext = libreriaContext;
+            _repository = repository;
+
+            //
+
+            //var empleados = _repository.GetAll();
+            //Console.WriteLine(empleados.Count);
+
+            //// ---- Para cuando se necesite flexibilidad
+
+            //var res = from empleado in _libreriaContext.Empleados where empleado.PrimerNombre.Contains("M") orderby empleado.PrimerNombre descending select empleado;
+            //// Esta parte no es necesaria, se va a implementar en Repository
+            //var valores = res.ToList();
+            //Console.WriteLine(valores.Count);
         }
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)

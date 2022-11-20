@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Libreria.Data;
+using Libreria.Data.MainModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,6 +27,12 @@ namespace Libreria
         public MainWindow()
         {
             InitializeComponent();
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("--------------------------------------");
+            //IRepository<Empleado> repo = new Repository<Empleado>();
+            //var res = repo.GetEmpleados().Result;
+            //Console.WriteLine(res.Count);
+            //Console.WriteLine(res[0].PrimerNombre);
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -44,17 +52,18 @@ namespace Libreria
 
         private void btnEntrar_Click(object sender, RoutedEventArgs e)
         {
-            if (txtUsuario.Text == "Admin" && txtPasword.Password == "1234")
-            {
-                lbInfo.Content = "Acceso permitido";
-                lbInfo.Foreground = Brushes.Green;
-                Llenar_Barra();
-            }
-            else
-            {
-                lbInfo.Content = "Acceso Denegado";
-                lbInfo.Foreground = Brushes.Red;
-            }
+            //if (txtUsuario.Text == "Admin" && txtPasword.Password == "1234")
+            //{
+            //    lbInfo.Content = "Acceso permitido";
+            //    lbInfo.Foreground = Brushes.Green;
+            //    Llenar_Barra();
+            //}
+            //else
+            //{
+            //    lbInfo.Content = "Acceso Denegado";
+            //    lbInfo.Foreground = Brushes.Red;
+            //}
+            Llenar_Barra();
         }
 
         private void pbProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

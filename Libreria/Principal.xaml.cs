@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Libreria.Data;
+using Libreria.Data.Empleados;
+using Libreria.Data.MainModels;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Libreria
 {
@@ -23,6 +17,7 @@ namespace Libreria
         public Principal()
         {
             InitializeComponent();
+
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -76,7 +71,7 @@ namespace Libreria
             Desmarcar();
             GridPadre.Children.Clear();
             SPEmpleado.Background = bc.ConvertFrom("#FF2D379B") as Brush;
-            Gestion_Empleado gestion_Empleado= new Gestion_Empleado();
+            Gestion_Empleado gestion_Empleado= new Gestion_Empleado(new LibreriaContext(), new Repository<Empleado>());
             GridPadre.Children.Add(gestion_Empleado);
         }
 
