@@ -1,20 +1,9 @@
 ﻿using Libreria.Data;
-using Libreria.Data.Empleados;
 using Libreria.Data.MainModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Libreria
 {
@@ -23,15 +12,12 @@ namespace Libreria
     /// </summary>
     public partial class Gestion_Empleado : UserControl
     {
-        private readonly LibreriaContext _libreriaContext;
-        private readonly IRepository<Empleado> _repository;
-        Empleado registroEmpleado = new Empleado();
-        int id;
-        public Gestion_Empleado(LibreriaContext libreriaContext, IRepository<Empleado> repository)
+        private LibreriaContext _libreriaContext;
+        private IRepository<Empleado> _repository;
+        public Gestion_Empleado()
         {
             InitializeComponent();
-            _libreriaContext = libreriaContext;
-            _repository = repository;
+            _repository = new Repository<Empleado>();
             MostrarLista();
             //
 
@@ -50,8 +36,10 @@ namespace Libreria
         {
             if(dgEmpleados.SelectedIndex != -1)
             {
-                registroEmpleado = (Empleado)dgEmpleados.SelectedItem;
-                _repository.Del(registroEmpleado.IdEmpleado);
+                var eliminarEmpleado = (Empleado)dgEmpleados.SelectedItem;
+                _repository.Del(eliminarEmpleado.IdEmpleado);
+                _repository.Savechange();
+                Limpiar();
                 MostrarLista();
             }
         }
@@ -60,15 +48,15 @@ namespace Libreria
         {
             if(dgEmpleados.SelectedIndex != -1)
             {
-                registroEmpleado = (Empleado)dgEmpleados.SelectedItem;
-                txtId_empleado.Text = $"{registroEmpleado.IdEmpleado}";
-                txtPrimer_nombre.Text = registroEmpleado.PrimerNombre;
-                txtSegundo_nombre.Text = registroEmpleado.SegundoNombre;
-                txtPrimer_apellido.Text = registroEmpleado.PrimerApellido;
-                txtSegundo_apellido.Text = registroEmpleado.SegundoApellido;
-                txtTelefono.Text = registroEmpleado.Telefono;
-                txtDireccion.Text = registroEmpleado.Direccion;
-                txtTitulo.Text=registroEmpleado.Titulo;
+                var cargarEmpleado = (Empleado)dgEmpleados.SelectedItem;
+                txtId_empleado.Text = $"{ cargarEmpleado.IdEmpleado}";
+                txtPrimer_nombre.Text =  cargarEmpleado.PrimerNombre;
+                txtSegundo_nombre.Text =  cargarEmpleado.SegundoNombre;
+                txtPrimer_apellido.Text =  cargarEmpleado.PrimerApellido;
+                txtSegundo_apellido.Text = cargarEmpleado.SegundoApellido;
+                txtTelefono.Text =  cargarEmpleado.Telefono;
+                txtDireccion.Text =  cargarEmpleado.Direccion;
+                txtTitulo.Text= cargarEmpleado.Titulo;
                 btnEditar.IsEnabled = true;
             }
             else
@@ -83,15 +71,19 @@ namespace Libreria
 
         private void btnEditar_Click(object sender, RoutedEventArgs e)
         {
-            registroEmpleado.IdEmpleado = Convert.ToInt32(txtId_empleado.Text);
-            registroEmpleado.PrimerNombre= txtPrimer_nombre.Text;
-            registroEmpleado.SegundoNombre = txtSegundo_nombre.Text;
-            registroEmpleado.PrimerApellido = txtPrimer_apellido.Text;
-            registroEmpleado.SegundoApellido = txtSegundo_apellido.Text;
-            registroEmpleado.Titulo = txtTitulo.Text;
-            registroEmpleado.Telefono = txtTelefono.Text;
-            registroEmpleado.Direccion = txtDireccion.Text;
-            _repository.Edit(registroEmpleado);
+            Empleado editarEmpleado = new()
+            {
+                IdEmpleado = Convert.ToInt32(txtId_empleado.Text),
+                PrimerNombre= txtPrimer_nombre.Text,
+                SegundoNombre = txtSegundo_nombre.Text,
+                PrimerApellido = txtPrimer_apellido.Text,
+                SegundoApellido = txtSegundo_apellido.Text,
+                Titulo = txtTitulo.Text,
+                Telefono = txtTelefono.Text,
+                Direccion = txtDireccion.Text
+            };
+            _repository.Edit(editarEmpleado);
+            _repository.Savechange();
             Limpiar();
             btnEditar.IsEnabled = false;
             MostrarLista();
@@ -100,15 +92,15 @@ namespace Libreria
 
         private void btnNuevo_Click(object sender, RoutedEventArgs e)
         {
-            registroEmpleado.IdEmpleado = id;
-            registroEmpleado.PrimerApellido = txtPrimer_apellido.Text;
-            registroEmpleado.PrimerNombre = txtPrimer_nombre.Text;
-            registroEmpleado.SegundoNombre = txtSegundo_nombre.Text;
-            registroEmpleado.SegundoApellido = txtSegundo_apellido.Text;
-            registroEmpleado.Telefono = txtTelefono.Text;
-            registroEmpleado.Titulo = txtTitulo.Text;
-            registroEmpleado.Direccion = txtDireccion.Text;
-            _repository.Add(registroEmpleado);
+            Empleado nuevoEmpleado = new();
+            nuevoEmpleado.PrimerApellido = txtPrimer_apellido.Text;
+            nuevoEmpleado.PrimerNombre = txtPrimer_nombre.Text;
+            nuevoEmpleado.SegundoNombre = txtSegundo_nombre.Text;
+            nuevoEmpleado.SegundoApellido = txtSegundo_apellido.Text;
+            nuevoEmpleado.Telefono = txtTelefono.Text;
+            nuevoEmpleado.Titulo = txtTitulo.Text;
+            nuevoEmpleado.Direccion = txtDireccion.Text;
+            _repository.Add(nuevoEmpleado);
             _repository.Savechange();
             Limpiar();
             
@@ -122,6 +114,7 @@ namespace Libreria
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
+            _libreriaContext = new LibreriaContext();
             var res = from empleado in _libreriaContext.Empleados where 
                       empleado.PrimerNombre.Contains(txtBuscar_nombre.Text) orderby
                       empleado.PrimerNombre descending select empleado;
@@ -131,7 +124,7 @@ namespace Libreria
         private void MostrarLista()
         {
             var empleados = _repository.GetAll();
-            id = empleados.Count() + 1;
+            //id = empleados.Count() + 1;
             dgEmpleados.ItemsSource= _repository.GetAll();
         }
         private void Limpiar()

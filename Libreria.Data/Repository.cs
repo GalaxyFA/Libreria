@@ -5,7 +5,7 @@ namespace Libreria.Data;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    public readonly LibreriaContext _libreriaEntities;
+    public LibreriaContext _libreriaEntities;
     public Repository()
     {
         _libreriaEntities = new LibreriaContext();
@@ -42,7 +42,16 @@ public class Repository<T> : IRepository<T> where T : class
 
     public void Edit(T entity)
     {
-        _libreriaEntities.Entry(entity).State = EntityState.Modified;
+        _libreriaEntities = new LibreriaContext();
+        try
+        {
+            _libreriaEntities.Set<T>().Update(entity);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            throw;
+        }
     }
 
     public int Savechange()

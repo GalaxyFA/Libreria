@@ -71,7 +71,7 @@ namespace Libreria
             Desmarcar();
             GridPadre.Children.Clear();
             SPEmpleado.Background = bc.ConvertFrom("#FF2D379B") as Brush;
-            Gestion_Empleado gestion_Empleado= new Gestion_Empleado(new LibreriaContext(), new Repository<Empleado>());
+            Gestion_Empleado gestion_Empleado= new Gestion_Empleado();
             GridPadre.Children.Add(gestion_Empleado);
         }
 

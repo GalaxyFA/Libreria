@@ -1,21 +1,9 @@
-﻿using Libreria.Data;
-using Libreria.Data.MainModels;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Libreria
 {
@@ -63,29 +51,30 @@ namespace Libreria
             //    lbInfo.Content = "Acceso Denegado";
             //    lbInfo.Foreground = Brushes.Red;
             //}
-            Llenar_Barra();
+            Principal principal = new Principal();
+            principal.Show();
+            this.Close();
+            //Llenar_Barra();
         }
 
         private void pbProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (pbProgress.Value == 25)
-            {
-                lbCarga.Content = "Cargando";
-            }
-            else if (pbProgress.Value == 50)
-            {
-                lbCarga.Content = "Validando inicio de sesión";
-            }
-            else if (pbProgress.Value == 75)
-            {
-                lbCarga.Content = "Cargando sistema";
-            }
-            else if (pbProgress.Value == 100)
-            {
-                Principal principal = new Principal();
-                principal.Show();
-                this.Close();
-            }
+            //if (pbProgress.Value == 25)
+            //{
+            //    lbCarga.Content = "Cargando";
+            //}
+            //else if (pbProgress.Value == 50)
+            //{
+            //    lbCarga.Content = "Validando inicio de sesión";
+            //}
+            //else if (pbProgress.Value == 75)
+            //{
+            //    lbCarga.Content = "Cargando sistema";
+            //}
+            //else if (pbProgress.Value == 100)
+            //{
+            //}
+                
         }
 
         private void txtPasword_KeyDown(object sender, KeyEventArgs e)
