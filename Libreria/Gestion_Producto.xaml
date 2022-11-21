@@ -27,21 +27,19 @@
             <Grid Grid.Column="0" Margin="5">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Información del Producto" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="txtId_producto"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Id del Producto"
+                                 MaterialDesign:HintAssist.IsFloating="True" IsEnabled="False"></TextBox>
                     <TextBox x:Name="txtNombre_producto"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Nombre del producto"
                                  MaterialDesign:HintAssist.IsFloating="True"></TextBox>
                     <TextBox x:Name="txtPrecio"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Precio"
-                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
-                    <TextBox x:Name="txtDescripcion"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Descripción"
                                  MaterialDesign:HintAssist.IsFloating="True"></TextBox>
                     <TextBox x:Name="txtCantidad"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Cantidad"
                                  MaterialDesign:HintAssist.IsFloating="True"></TextBox>
                     <TextBox x:Name="txtCodigo"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Codigo"
                                  MaterialDesign:HintAssist.IsFloating="True"></TextBox>
-                    <TextBox x:Name="txtNombre_encargadao"  Width="250" Height="50" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Nombre de Encargado"
-                                 MaterialDesign:HintAssist.IsFloating="True"></TextBox>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="btnNuevo" Content="Nuevo" Margin="5" Click="btnNuevo_Click"></Button>
-                        <Button x:Name="btnEditar" Content="Editar" Margin="5" Click="btnEditar_Click"/>
+                        <Button x:Name="btnEditar" Content="Editar" Margin="5" Click="btnEditar_Click" IsEnabled="False" Cursor="Hand"/>
                         <Button x:Name="btnEliminar" Content="Eliminar" Margin="5" Click="btnEliminar_Click"/>
                         <Button x:Name="btnCargar" Content="Cargar" Margin="5" Click="btnCargar_Click" Cursor="Hand"/>
                     </StackPanel>
@@ -50,7 +48,7 @@
             <Grid Grid.Column="1" Margin="0">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Buscador de Productos" HorizontalAlignment="Center"/>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="10">
                         <TextBlock Text="Producto: " Margin="0,0,15,0" VerticalAlignment="Center" FontSize="16"/>
                         <TextBox x:Name="txtBuscar_nombre" Width="250" MaterialDesign:HintAssist.Hint="Nombre del producto" FontSize="15"
                                       MaterialDesign:HintAssist.IsFloating="True"></TextBox>
@@ -61,10 +59,10 @@
                             <MaterialDesign:PackIcon Kind="Reload" Width="14" Height="14"/>
                         </Button>
                     </StackPanel>
-                    <DataGrid x:Name="dgProductos" IsReadOnly="True" Height="400" AutoGenerateColumns="False" Foreground="White" Background="WhiteSmoke" Margin="5 0">
+                    <DataGrid x:Name="dgProductos" IsReadOnly="True" Height="400" AutoGenerateColumns="False" Foreground="White" Background="#FF65017D" Margin="5 0">
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="Background" Value="#FFF161F1"/>
+                                <Setter Property="Background" Value="#FF610071"/>
                                 <Setter Property="FontWeight" Value="Bold"/>
                                 <Setter Property="Height" Value="20"/>
                                 <Setter Property="BorderBrush" Value="White"/>
@@ -73,12 +71,11 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="colNombre" Header="_Nombre" Width="150" Binding="{Binding Nombre}"/>
-                            <DataGridTextColumn x:Name="colPrecio" Header="_Precio" Width="80" Binding="{Binding Precio}"/>
-                            <DataGridTextColumn x:Name="colDescripcion" Header="_Descripcion" Width="200" Binding="{Binding Descripcion}"/>
-                            <DataGridTextColumn x:Name="colCantidad" Header="_Cantidad" Width="80" Binding="{Binding Precio}"/>
-                            <DataGridTextColumn x:Name="colCodigo" Header="_Codigo" Width="80" Binding="{Binding Codigo}"/>
-                            <DataGridTextColumn x:Name="colEncargado" Header="_Encargado" Width="120" Binding="{Binding Encargado}"/>
+                            <DataGridTextColumn x:Name="colId" Header="   _Id" Width="50" Binding="{Binding IdProducto}"/>
+                            <DataGridTextColumn x:Name="colNombre" Header="_Nombre" Width="150" Binding="{Binding NombreProducto}"/>
+                            <DataGridTextColumn x:Name="colPrecio" Header="_Cantidad" Width="80" Binding="{Binding Cantidad}"/>
+                            <DataGridTextColumn x:Name="colCantidad" Header="_Precio" Width="80" Binding="{Binding Precio}"/>
+                            <DataGridTextColumn x:Name="colCodigo" Header="_Codigo" Width="80" Binding="{Binding Upc}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>

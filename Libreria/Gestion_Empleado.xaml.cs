@@ -123,7 +123,7 @@ namespace Libreria
         }
         private void MostrarLista()
         {
-            var empleados = _repository.GetAll();
+           var empleados = _repository.GetAll();
             //id = empleados.Count() + 1;
             dgEmpleados.ItemsSource= _repository.GetAll();
         }

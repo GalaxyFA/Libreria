@@ -55,7 +55,7 @@
                     <MaterialDesign:PackIcon Kind="Reload"/>
                 </Button>
             </StackPanel>
-            <DataGrid x:Name="dg_Inventario" IsReadOnly="True" Height="100" AutoGenerateColumns="False" Foreground="White" Background="AliceBlue">
+            <DataGrid x:Name="dg_Inventario" IsReadOnly="True" Height="150" AutoGenerateColumns="False" Foreground="White" Background="DarkViolet">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="Gray"/>
@@ -65,18 +65,18 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="columNombre" Header="_Nombre" Width="200" Binding="{Binding Nombre}"/>
+                    <DataGridTextColumn x:Name="columId" Header="  _Id" Width="50" Binding="{Binding IdProducto}"/>
+                    <DataGridTextColumn x:Name="columNombre" Header="_Nombre" Width="200" Binding="{Binding NombreProducto}"/>
                     <DataGridTextColumn x:Name="columPrecio" Header="_Precio" Width="100" Binding="{Binding Precio}" />
-                    <DataGridTextColumn x:Name="columDescripcion" Header="_Descripción" Width="300" Binding="{Binding Descripcion}"/>
                     <DataGridTextColumn x:Name="columCantidad" Header="_Cantidad" Width="70" Binding="{Binding Cantidad}"/>
-                    <DataGridTextColumn x:Name="columUPC" Header="_Código" Width="*" Binding="{Binding UPC}"/>
+                    <DataGridTextColumn x:Name="columUPC" Header="_Código" Width="*" Binding="{Binding Upc}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <MaterialDesign:PackIcon Kind="ShoppingCart" Width="50" Foreground="{Binding ElementName=tb_Com}" Margin="0 5"  />
+                <MaterialDesign:PackIcon Kind="ShoppingCart" Width="50"  Margin="0 5"  />
                 <TextBlock x:Name="tb_Com" Text="Carrito de compras" FontSize="16" Margin="0 5"></TextBlock>
             </StackPanel>
-            <DataGrid x:Name="dg_Carrito_Compras" IsReadOnly="True" Height="170" AutoGenerateColumns="False" Foreground="White" Background="AliceBlue">
+            <DataGrid x:Name="dg_Carrito_Compras" IsReadOnly="True" Height="170" AutoGenerateColumns="False" Foreground="White" Background="BlueViolet">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="Gray"/>
@@ -86,11 +86,11 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="colNombre" Header="_Nombre" Width="200" Binding="{Binding Nombre}"/>
+                    <DataGridTextColumn x:Name="colId" Header="  _Id" Width="50" Binding="{Binding IdProducto}"/>
+                    <DataGridTextColumn x:Name="colNombre" Header="_Nombre" Width="200" Binding="{Binding NombreProducto}"/>
                     <DataGridTextColumn x:Name="colPrecio" Header="_Precio" Width="100" Binding="{Binding Precio}" />
-                    <DataGridTextColumn x:Name="colDescripcion" Header="_Descripción" Width="300" Binding="{Binding Descripcion}"/>
                     <DataGridTextColumn x:Name="colCantidad" Header="_Cantidad" Width="70" Binding="{Binding Cantidad}"/>
-                    <DataGridTextColumn x:Name="colUPC" Header="_Código" Width="*" Binding="{Binding UPC}"/>
+                    <DataGridTextColumn x:Name="colUPC" Header="_Código" Width="*" Binding="{Binding Upc}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" >
