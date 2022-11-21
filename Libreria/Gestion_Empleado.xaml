@@ -26,6 +26,8 @@
 
                 <StackPanel>
                     <TextBlock Text="Información del Empleado" HorizontalAlignment="Center"/>
+                    <TextBox x:Name="txtId_empleado"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Id Empleado"
+                                 MaterialDesign:HintAssist.IsFloating="True" IsEnabled="False"></TextBox>
                     <TextBox x:Name="txtPrimer_nombre"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Primer Nombre"
                                  MaterialDesign:HintAssist.IsFloating="True"></TextBox>
                     <TextBox x:Name="txtSegundo_nombre"  Width="250" Height="40" HorizontalAlignment="Left" Margin="5" MaterialDesign:HintAssist.Hint="Segundo Nombre"
@@ -44,7 +46,7 @@
                     
                     <StackPanel Orientation="Horizontal" Margin="0 5">
                         <Button x:Name="btnNuevo" Content="Nuevo" Margin="5" Click="btnNuevo_Click"></Button>
-                        <Button x:Name="btnEditar" Content="Editar" Margin="5" Click="btnEditar_Click"></Button>
+                        <Button x:Name="btnEditar" Content="Editar" Margin="5" Click="btnEditar_Click" IsEnabled="False"></Button>
                         <Button x:Name="btnEliminar" Content="Eliminar" Margin="5" Click="btnEliminar_Click"/>
                         <Button x:Name="btnCargar" Content="Cargar" Margin="5" Click="btnCargar_Click"></Button>
                     </StackPanel>
@@ -66,11 +68,11 @@
                             <MaterialDesign:PackIcon Kind="Reload" Width="14" Height="14"/>
                         </Button>
                     </StackPanel>
-                    <DataGrid x:Name="dgEmpleados" IsReadOnly="True" Height="450" AutoGenerateColumns="False" Foreground="White" Background="WhiteSmoke"
+                    <DataGrid x:Name="dgEmpleados" IsReadOnly="True" Height="450" AutoGenerateColumns="False" Foreground="White" Background="#FF65017D"
                                   HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" Margin="10 0">
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="Background" Value="#FFF161F1"/>
+                                <Setter Property="Background" Value="#FF610071"/>
                                 <Setter Property="FontWeight" Value="Bold"/>
                                 <Setter Property="Height" Value="20"/>
                                 <Setter Property="BorderBrush" Value="White"/>
@@ -79,15 +81,14 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="colPrimer_Nombre" Header="_Primer Nombre" Width="150" Binding="{Binding Primer_Nombre}"/>
-                            <DataGridTextColumn x:Name="colSegundo_Nombre" Header="_Segundo Nombre" Width="150" Binding="{Binding Segundo_Nombre}"/>
-                            <DataGridTextColumn x:Name="colPrimer_Apellido" Header="_Primer Apellido" Width="150" Binding="{Binding Primer_Apellido}"/>
-                            <DataGridTextColumn x:Name="colSegundo_Apellido" Header="_Segundo Apellido" Width="150" Binding="{Binding Segundo_Apellido}"/>
+                            <DataGridTextColumn x:Name="colId" Header=" _Id" Width="50" Binding="{Binding IdEmpleado}"/>
+                            <DataGridTextColumn x:Name="colPrimer_Nombre" Header="_Primer Nombre" Width="150" Binding="{Binding PrimerNombre}"/>
+                            <DataGridTextColumn x:Name="colSegundo_Nombre" Header="_Segundo Nombre" Width="150" Binding="{Binding SegundoNombre}"/>
+                            <DataGridTextColumn x:Name="colPrimer_Apellido" Header="_Primer Apellido" Width="150" Binding="{Binding PrimerApellido}"/>
+                            <DataGridTextColumn x:Name="colSegundo_Apellido" Header="_Segundo Apellido" Width="150" Binding="{Binding SegundoApellido}"/>
                             <DataGridTextColumn x:Name="colTelefono" Header="_Telefono" Width="80" Binding="{Binding Telefono}"/>
                             <DataGridTextColumn x:Name="colDireccion" Header="_Direccion" Width="200" Binding="{Binding Direccion}"/>
-                            <DataGridTextColumn x:Name="colUsuario" Header="_Usuario" Width="150" Binding="{Binding Usuario}"/>
-                            <DataGridTextColumn x:Name="colPassword" Header="_Contraseña" Width="100" Binding="{Binding Password}"/>
-                            <DataGridTextColumn x:Name="colCargo" Header="_Cargo" Width="100" Binding="{Binding Cargo}"/>
+                            <DataGridTextColumn x:Name="colCargo" Header="_Titulo" Width="100" Binding="{Binding Titulo}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
