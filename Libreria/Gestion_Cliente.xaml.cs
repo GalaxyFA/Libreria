@@ -37,7 +37,7 @@ namespace Libreria
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
         {
-
+            //Será una eliminación Logica, es decir que su estado quedará como "Eliminado"
         }
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)

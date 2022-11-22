@@ -1,4 +1,5 @@
-﻿using Libreria.Data;
+﻿using Libreria.Controladores;
+using Libreria.Data;
 using Libreria.Data.MainModels;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,9 @@ namespace Libreria
         private IRepository<Cliente> CliRepository;
         private IRepository<ClienteJuridico> CliJurRepository;
         private IRepository<ClienteNatural> CliNatRepository;
+
         List<Producto> carrito = new();
+        //ControlProducto carrito= new();
         decimal total  = 0;
         public Venta()
         {
@@ -80,31 +83,88 @@ namespace Libreria
 
         private void btnRealizar_Compra_Click(object sender, RoutedEventArgs e)
         {
-
+            if(cbTipo_Cliente.SelectedIndex==-1 || cbTipo_Cliente.SelectedIndex == 0)
+            {
+                Cliente cli = new Cliente();
+                cli.Email = txt_Email.Text;
+                cli.Telefono = txt_Telefono.Text;
+                cli.Estado = "Activo";
+                RegistrarCliente(cli);
+                ClienteNatural cliNat = new ClienteNatural();
+                cliNat.PrimerNombre = txt_Primer_Nombre.Text;
+                cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
+                cliNat.PrimerApellido=txt_Primer_Apellido.Text;
+                cliNat.SegundoApellido= txt_Segundo_Apellido.Text; 
+                //cliNat.IdCliente
+            }
+            else if (cbTipo_Cliente.SelectedIndex == 1)
+            {
+                Cliente cli = new Cliente();
+                cli.Email = txt_Email.Text;
+                cli.Telefono = txt_Telefono.Text;
+                cli.Estado = "Activo";
+                RegistrarCliente(cli);
+            }
         }
 
         private void btnAddCarrito_Click(object sender, RoutedEventArgs e)
         {
             if(dg_Inventario.SelectedIndex!= -1)
             {
-                var CarriProd = (Producto)dg_Inventario.SelectedItem;
+                int can = 0;
+                var Selected = (Producto)dg_Inventario.SelectedItem;
                 //var Cantidad =  Convert.ToInt32(txtCantidad.Text);
 
                 //if (carrito == null)
                 //{
                 //Esto agrega de la tabla inventario a 
-                CarriProd.Cantidad = Convert.ToInt32(txtCantidad.Text);
-                carrito.Add(CarriProd);
+                //CarriProd.Cantidad = Convert.ToInt32(txtCantidad.Text);
+                //carrito.Add(CarriProd);
                 //}
                 //else
                 //{
                 //AddOrUpadate(carrito, CarriProd);
                 //}
+                can = Convert.ToInt32(txtCantidad.Text);
+               // can = carrito.AddOrUpadate(ProdRepository.GetAll(), Selected, can);
+                AddCarrito(Selected.IdProducto, Selected.NombreProducto,Selected.Precio, can, Selected.Upc);
                 txtCantidad.Clear();
                    
                 ActualizarItem();
-                total= ActualizarMonto();
-                text_Monto.Text = "Monto total: " + $"{total}";
+                ActualizarMonto();
+               
+            }
+        }
+
+        private void AddCarrito(int idProducto,string nombre, decimal precio, int can, string upc)
+        {
+            if(carrito == null)
+            {
+                Producto pro = new Producto();
+                pro.IdProducto = idProducto;
+                pro.NombreProducto = nombre;
+                pro.Cantidad = can;
+                pro.Precio = precio; 
+                pro.Upc=upc;
+                carrito.Add(pro);
+                
+            }
+            else
+            {
+                if (Existe(idProducto) == true)
+                {
+                    Cambios(idProducto, can);
+                }
+                else
+                {
+                    Producto pro = new Producto();
+                    pro.IdProducto = idProducto;
+                    pro.NombreProducto = nombre;
+                    pro.Cantidad = can;
+                    pro.Precio = precio;
+                    pro.Upc = upc;
+                    carrito.Add(pro);
+                }
             }
         }
 
@@ -128,19 +188,26 @@ namespace Libreria
 
         private void btnBuscar_Click(object sender, RoutedEventArgs e)
         {
-
+            _liberiaContext = new LibreriaContext();
+            var search = from producto in _liberiaContext.Productos
+                         where
+                         producto.NombreProducto.Contains(txtBuscar_producto.Text)
+                         orderby
+                         producto.NombreProducto descending
+                         select producto;
+            dg_Inventario.ItemsSource = ProdRepository.GetByQuery(search);
         }
 
         private void btnRefrescar_Click(object sender, RoutedEventArgs e)
         {
-
+            MostrarLista();
         }
         private void ActualizarItem() {
             dg_Carrito_Compras.ItemsSource = null;
             dg_Carrito_Compras.ItemsSource = carrito;
 
         }
-        private decimal ActualizarMonto()
+        private void ActualizarMonto()
         {
             decimal total = 0, costo =0;
             foreach(var item in carrito)
@@ -148,27 +215,35 @@ namespace Libreria
                 costo = item.Cantidad * item.Precio;
                 total += costo;
             }
-            
-            return total;
+
+            text_Monto.Text = "Monto total: " + $"{total}";
+        }
+        private bool Existe(int id)
+        {
+            foreach(var item in carrito)
+            {
+                if (item.IdProducto == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void Cambios(int id, int canti)
+        {
+            foreach(var item in carrito){
+                if(item.IdProducto == id)
+                {
+                    item.Cantidad = canti;
+                }
+            }
+        }
+        private void RegistrarCliente(Cliente cliente)
+        {
+            CliRepository.Add(cliente);
+            CliRepository.Savechange();
         }
         
-        private void AddOrUpadate(List<Producto> pros, Producto p)
-        {
-            
-            foreach(Producto prod in pros)
-            {
-                if(prod.IdProducto == p.IdProducto)
-                {
-                    prod.Cantidad = Convert.ToInt32(txtCantidad.Text);
-                    break;
-                }
-                else
-                {
-                    p.Cantidad = Convert.ToInt32(txtCantidad.Text);
-                    pros.Add(p);
-                    break;
-                }
-            } 
-        }
+        
     }
 }
