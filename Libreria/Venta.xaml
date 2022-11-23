@@ -94,7 +94,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" >
-                <TextBlock x:Name="text_Monto" Text="Monto total:" FontSize="16" Height="20" Width="84" Margin="5 0"/>
+                <TextBlock x:Name="text_Monto" Text="Monto total:" FontSize="16" Height="20" Width="160" Margin="5 0"/>
                 <TextBox x:Name="txtCantidad" MaterialDesign:HintAssist.Hint="Cantidad" MaterialDesign:HintAssist.IsFloating="True" Margin="630,0,10,0"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -108,6 +108,8 @@
                     <RadioButton Content="Efectivo" IsChecked="True" GroupName="Pago"></RadioButton>
                     <RadioButton Content="Tarjeta" GroupName="Pago"></RadioButton>
                 </StackPanel>
+                <TextBox x:Name="txt_IdEmpleado" MaterialDesign:HintAssist.Hint="Id de EmPleado" 
+                         MaterialDesign:HintAssist.IsFloating="True" Margin="100,0,10,0" Height="40" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"></TextBox>
             </StackPanel>
         </StackPanel>
             

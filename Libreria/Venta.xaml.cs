@@ -33,6 +33,9 @@ namespace Libreria
         List<Producto> carrito = new();
         //ControlProducto carrito= new();
         decimal total  = 0;
+        int i = 0;
+        
+
         public Venta()
         {
             InitializeComponent();
@@ -42,6 +45,10 @@ namespace Libreria
             CliJurRepository = new Repository<ClienteJuridico>();
             CliNatRepository = new Repository<ClienteNatural>();
             MostrarLista();
+            ObtenerIDEmpleado();
+           
+            //Console.WriteLine(client.Count());
+
         }
 
         private void MostrarLista()
@@ -83,28 +90,61 @@ namespace Libreria
 
         private void btnRealizar_Compra_Click(object sender, RoutedEventArgs e)
         {
+            i = 0;
+
             if(cbTipo_Cliente.SelectedIndex==-1 || cbTipo_Cliente.SelectedIndex == 0)
             {
-                Cliente cli = new Cliente();
-                cli.Email = txt_Email.Text;
-                cli.Telefono = txt_Telefono.Text;
-                cli.Estado = "Activo";
-                RegistrarCliente(cli);
+                //Cliente cli = new Cliente();
+                //cli.Email = txt_Email.Text;
+                //cli.Telefono = txt_Telefono.Text;
+                //cli.Estado = "Activo";
+                //RegistrarCliente(cli);
                 ClienteNatural cliNat = new ClienteNatural();
-                cliNat.PrimerNombre = txt_Primer_Nombre.Text;
-                cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
-                cliNat.PrimerApellido=txt_Primer_Apellido.Text;
-                cliNat.SegundoApellido= txt_Segundo_Apellido.Text; 
-                //cliNat.IdCliente
+                //cliNat.PrimerNombre = txt_Primer_Nombre.Text;
+                //cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
+                //cliNat.PrimerApellido=txt_Primer_Apellido.Text;
+                //cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
+                i = ObtenerIDCliente();
+                cliNat.IdCliente=i;
+                //CliNatRepository.Add(cliNat);
+                //CliNatRepository.Savechange();
+               
+                
             }
             else if (cbTipo_Cliente.SelectedIndex == 1)
             {
-                Cliente cli = new Cliente();
-                cli.Email = txt_Email.Text;
-                cli.Telefono = txt_Telefono.Text;
-                cli.Estado = "Activo";
-                RegistrarCliente(cli);
+                //Cliente cli = new Cliente();
+                //cli.Email = txt_Email.Text;
+                //cli.Telefono = txt_Telefono.Text;
+                //cli.Estado = "Activo";
+                //RegistrarCliente(cli);
+                // i = ObtenerIDCliente();
+                //ClienteJuridico cliJur = new ClienteJuridico();
+                //cliJur.NombreCliente = txtNombre_cliente.Text;
+                //cliJur.NombreRepresentante = txtNombre_representante.Text;
+                //cliJur.ApellidoRepresentante = txtApellido_representante.Text;
+                //cliJur.FechaConstitucion = (DateTime)dp_Fecha_Consti.SelectedDate!;
+                //cliJur.IdCliente = i;
+                //CliJurRepository.Add(cliJur);
             }
+        }
+
+        private int ObtenerIDCliente()
+        {
+            int i = 0;
+            List<Cliente> client = CliRepository.GetAll();
+            List<string> res = (from d in client
+                                orderby d.IdCliente descending
+                       select (""+d.IdCliente )).Take(1).ToList();
+
+            foreach (var la in res)
+            {
+                i = Convert.ToInt32(la);
+                Console.WriteLine(la);
+
+            }
+            
+            return i;
         }
 
         private void btnAddCarrito_Click(object sender, RoutedEventArgs e)
@@ -140,7 +180,7 @@ namespace Libreria
         {
             if(carrito == null)
             {
-                Producto pro = new Producto();
+                Producto pro = new();
                 pro.IdProducto = idProducto;
                 pro.NombreProducto = nombre;
                 pro.Cantidad = can;
@@ -209,14 +249,14 @@ namespace Libreria
         }
         private void ActualizarMonto()
         {
-            decimal total = 0, costo =0;
+             decimal costo =0;
             foreach(var item in carrito)
             {
                 costo = item.Cantidad * item.Precio;
                 total += costo;
             }
 
-            text_Monto.Text = "Monto total: " + $"{total}";
+            text_Monto.Text = $"Monto total: C$ {total}";
         }
         private bool Existe(int id)
         {
@@ -244,6 +284,23 @@ namespace Libreria
             CliRepository.Savechange();
         }
         
-        
+        private void ObtenerIDEmpleado()
+        {
+            int id = 0;
+            _liberiaContext = new();
+            var res = from empleado in _liberiaContext.Empleados
+                      where
+                       empleado.Titulo.Contains("Vendedor")
+                      orderby
+                       empleado.Titulo descending
+                      select empleado;
+            var emple = EmpRepository.GetByQuery(res);
+
+            foreach(var a in emple)
+            {
+                txt_IdEmpleado.Text = a.IdEmpleado.ToString();
+            }
+            
+        }
     }
 }
