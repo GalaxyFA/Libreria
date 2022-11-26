@@ -105,8 +105,8 @@
                 <Button x:Name="btnSacar_Compra" Content="Sacar del carrito" Margin="5 0" Background="#FF773DDE"
                         Click="btnSacar_Compra_Click"></Button>
                 <StackPanel>
-                    <RadioButton Content="Efectivo" IsChecked="True" GroupName="Pago"></RadioButton>
-                    <RadioButton Content="Tarjeta" GroupName="Pago"></RadioButton>
+                    <RadioButton Content="Efectivo" Name="radEfectivo" IsChecked="True" GroupName="Pago"></RadioButton>
+                    <RadioButton Content="Tarjeta" Name="radTarjeta" GroupName="Pago"></RadioButton>
                 </StackPanel>
                 <TextBox x:Name="txt_IdEmpleado" MaterialDesign:HintAssist.Hint="Id de EmPleado" 
                          MaterialDesign:HintAssist.IsFloating="True" Margin="100,0,10,0" Height="40" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"></TextBox>

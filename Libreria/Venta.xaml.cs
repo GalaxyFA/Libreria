@@ -29,6 +29,8 @@ namespace Libreria
         private IRepository<Cliente> CliRepository;
         private IRepository<ClienteJuridico> CliJurRepository;
         private IRepository<ClienteNatural> CliNatRepository;
+        private IRepository<Ventum> VenRepository;
+        private IRepository<DetalleVentum> DetVenReposity;
 
         List<Producto> carrito = new();
         //ControlProducto carrito= new();
@@ -44,6 +46,8 @@ namespace Libreria
             CliRepository = new Repository<Cliente>();
             CliJurRepository = new Repository<ClienteJuridico>();
             CliNatRepository = new Repository<ClienteNatural>();
+            VenRepository = new Repository<Ventum>();
+            DetVenReposity = new Repository<DetalleVentum>();
             MostrarLista();
             ObtenerIDEmpleado();
            
@@ -93,23 +97,34 @@ namespace Libreria
             i = 0;
 
             if(cbTipo_Cliente.SelectedIndex==-1 || cbTipo_Cliente.SelectedIndex == 0)
-            {
-                //Cliente cli = new Cliente();
-                //cli.Email = txt_Email.Text;
-                //cli.Telefono = txt_Telefono.Text;
-                //cli.Estado = "Activo";
-                //RegistrarCliente(cli);
-                ClienteNatural cliNat = new ClienteNatural();
-                //cliNat.PrimerNombre = txt_Primer_Nombre.Text;
-                //cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
-                //cliNat.PrimerApellido=txt_Primer_Apellido.Text;
-                //cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
-                i = ObtenerIDCliente();
-                cliNat.IdCliente=i;
-                //CliNatRepository.Add(cliNat);
-                //CliNatRepository.Savechange();
-               
+            {//Registar cliente
+                Cliente cli = new Cliente();
+                cli.Email = txt_Email.Text;
+                cli.Telefono = txt_Telefono.Text;
+                cli.Estado = "Activo";
+                RegistrarCliente(cli);//Contiene las lineas de CliRepository add y savechange
                 
+                ClienteNatural cliNat = new ClienteNatural();
+                cliNat.PrimerNombre = txt_Primer_Nombre.Text;
+                cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
+                cliNat.PrimerApellido=txt_Primer_Apellido.Text;
+                cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
+                i = ObtenerIDCliente();
+                cliNat.IdCliente = i;
+                //cliNat.IdClienteNavigation = cli;
+                
+                Ventum v=RegistrarVenta(i);
+
+                CliNatRepository.Add(cliNat);
+                RegistrarDetalleVenta();
+                ActualizarTablaProducto();
+                Limpiar();
+                ActualizarItem();
+             
+                MostrarLista();
+
+
+
             }
             else if (cbTipo_Cliente.SelectedIndex == 1)
             {
@@ -172,6 +187,7 @@ namespace Libreria
                    
                 ActualizarItem();
                 ActualizarMonto();
+                
                
             }
         }
@@ -249,7 +265,9 @@ namespace Libreria
         }
         private void ActualizarMonto()
         {
+
              decimal costo =0;
+            total = 0;
             foreach(var item in carrito)
             {
                 costo = item.Cantidad * item.Precio;
@@ -301,6 +319,100 @@ namespace Libreria
                 txt_IdEmpleado.Text = a.IdEmpleado.ToString();
             }
             
+        }
+        private Ventum RegistrarVenta(int id )
+        {
+            Ventum nuevaVenta = new();
+            nuevaVenta.FechaVenta= DateTime.Now;
+            nuevaVenta.TotalVenta = total;
+
+            if (radEfectivo.IsChecked == true)
+            {
+                nuevaVenta.Pago = radEfectivo.Content.ToString();
+            }
+            else
+            {
+                nuevaVenta.Pago = radTarjeta.Content.ToString();
+            }
+            nuevaVenta.IdCliente= id;
+            nuevaVenta.IdEmpleado = Convert.ToInt32(txt_IdEmpleado.Text);
+            //nuevaVenta.IdClienteNavigation = cliente;
+
+            VenRepository.Add(nuevaVenta);
+            VenRepository.Savechange();
+            return nuevaVenta;
+        }
+        private void RegistrarDetalleVenta()
+        {
+            foreach(Producto p in carrito)
+            {
+              DetalleVentum detalleVentum = new DetalleVentum();
+              detalleVentum.IdVenta = ObtenerIdVenta();
+              detalleVentum.IdProducto = p.IdProducto;
+              detalleVentum.Cantidad= p.Cantidad;
+              DetVenReposity.Add(detalleVentum);
+            }
+            DetVenReposity.Savechange();
+        }
+        private void ActualizarTablaProducto()
+        {
+            List<Producto> lista = new List<Producto>();
+            lista = ProdRepository.GetAll();
+            foreach (Producto producto in carrito)
+            {
+                ActualizarProducto(producto.IdProducto, producto.Cantidad,lista);
+            }
+        }
+
+        private void ActualizarProducto(int idProducto, int cantidad, List<Producto> lista)
+        {
+            
+            foreach(Producto producto in lista)
+            {
+                if(producto.IdProducto == idProducto)
+                {
+                    Console.WriteLine(producto.Cantidad + " " + cantidad);
+                    producto.Cantidad= producto.Cantidad-cantidad;
+                    
+                    ProdRepository.Edit(producto);
+                }   
+            }
+            ProdRepository.Savechange();
+        }
+
+        private void Limpiar()
+        {
+            txtApellido_representante.Clear();
+            txtNombre_cliente.Clear();
+            txtNombre_representante.Clear();
+            txt_Email.Clear();
+            txt_Primer_Apellido.Clear();
+            txt_Segundo_Apellido.Clear();
+            txt_Primer_Nombre.Clear();
+            txt_Segundo_Nombre.Clear();
+            txt_Telefono.Clear();
+            dp_Fecha_Consti.DataContext = null;
+            carrito.Clear();
+            
+        }
+
+        private int ObtenerIdVenta()
+        {
+            int i = 0;
+            List<Ventum> vent = VenRepository.GetAll(); 
+            List<string> res = (from d in vent
+                                orderby d.IdCliente descending
+                                select ("" + d.IdVenta)).Take(1).ToList();
+
+            foreach (var la in res)
+            {
+                i = Convert.ToInt32(la);
+                Console.WriteLine(la);
+
+            }
+
+            return i;
+
         }
     }
 }
