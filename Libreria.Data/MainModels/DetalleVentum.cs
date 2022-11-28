@@ -8,6 +8,7 @@ namespace Libreria.Data.MainModels
         public int? IdVenta { get; set; }
         public int? IdProducto { get; set; }
         public int Cantidad { get; set; }
+        public int DetalleVentalId { get; set; }
 
         public virtual Producto? IdProductoNavigation { get; set; }
         public virtual Ventum? IdVentaNavigation { get; set; }

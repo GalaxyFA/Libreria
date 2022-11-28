@@ -10,6 +10,7 @@ namespace Libreria.Data.MainModels
         public string ApellidoRepresentante { get; set; } = null!;
         public DateTime FechaConstitucion { get; set; }
         public int? IdCliente { get; set; }
+        public int ClienteJuridicoId { get; set; }
 
         public virtual Cliente? IdClienteNavigation { get; set; }
     }

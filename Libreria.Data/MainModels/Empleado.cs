@@ -1,4 +1,7 @@
-﻿namespace Libreria.Data.MainModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace Libreria.Data.MainModels
 {
     public partial class Empleado
     {

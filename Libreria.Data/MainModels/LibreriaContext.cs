@@ -36,7 +36,7 @@ namespace Libreria.Data.MainModels
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=Libreria;User Id=sa;Password=passw0rd*");
-            }//
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,6 +71,8 @@ namespace Libreria.Data.MainModels
                     .IsUnicode(false)
                     .HasColumnName("Apellido_representante");
 
+                entity.Property(e => e.ClienteJuridicoId).ValueGeneratedOnAdd();
+
                 entity.Property(e => e.FechaConstitucion)
                     .HasColumnType("date")
                     .HasColumnName("Fecha_constitucion");
@@ -96,6 +98,8 @@ namespace Libreria.Data.MainModels
                 entity.HasNoKey();
 
                 entity.ToTable("ClienteNatural");
+
+                entity.Property(e => e.ClienteNaturalId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.PrimerApellido)
                     .HasMaxLength(40)
@@ -146,6 +150,8 @@ namespace Libreria.Data.MainModels
             {
                 entity.HasNoKey();
 
+                entity.Property(e => e.DetalleCompraslId).ValueGeneratedOnAdd();
+
                 entity.HasOne(d => d.IdCompraNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.IdCompra)
@@ -163,6 +169,8 @@ namespace Libreria.Data.MainModels
 
                 entity.ToTable("DetalleEncargo");
 
+                entity.Property(e => e.DetalleEncargolId).ValueGeneratedOnAdd();
+
                 entity.HasOne(d => d.IdEncagoNavigation)
                     .WithMany()
                     .HasForeignKey(d => d.IdEncago)
@@ -177,6 +185,8 @@ namespace Libreria.Data.MainModels
             modelBuilder.Entity<DetalleVentum>(entity =>
             {
                 entity.HasNoKey();
+
+                entity.Property(e => e.DetalleVentalId).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.IdProductoNavigation)
                     .WithMany()
