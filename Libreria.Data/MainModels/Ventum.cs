@@ -5,6 +5,11 @@ namespace Libreria.Data.MainModels
 {
     public partial class Ventum
     {
+        public Ventum()
+        {
+            DetalleVenta = new HashSet<DetalleVentum>();
+        }
+
         public int IdVenta { get; set; }
         public DateTime FechaVenta { get; set; }
         public decimal TotalVenta { get; set; }
@@ -14,5 +19,6 @@ namespace Libreria.Data.MainModels
 
         public virtual Cliente? IdClienteNavigation { get; set; }
         public virtual Empleado? IdEmpleadoNavigation { get; set; }
+        public virtual ICollection<DetalleVentum> DetalleVenta { get; set; }
     }
 }

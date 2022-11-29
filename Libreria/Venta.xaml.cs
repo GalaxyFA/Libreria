@@ -35,7 +35,6 @@ namespace Libreria
         List<Producto> carrito = new();
         //ControlProducto carrito= new();
         decimal total  = 0;
-        int i = 0;
         
 
         public Venta()
@@ -94,7 +93,7 @@ namespace Libreria
 
         private void btnRealizar_Compra_Click(object sender, RoutedEventArgs e)
         {
-            i = 0;
+            int indiceVenta = 0;
 
             if(cbTipo_Cliente.SelectedIndex==-1 || cbTipo_Cliente.SelectedIndex == 0)
             {//Registar cliente
@@ -109,11 +108,11 @@ namespace Libreria
                 cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
                 cliNat.PrimerApellido=txt_Primer_Apellido.Text;
                 cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
-                i = ObtenerIDCliente();
-                cliNat.IdCliente = i;
-                cliNat.IdClienteNavigation = cli;
+                indiceVenta = ObtenerIDCliente();
+                cliNat.IdCliente = indiceVenta;
+                //cliNat.IdClienteNavigation = cli;
                 
-                Ventum v=RegistrarVenta(i);
+                Ventum v=RegistrarVenta(indiceVenta);
 
                 CliNatRepository.Add(cliNat);
                 CliNatRepository.Savechange();

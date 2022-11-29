@@ -5,6 +5,11 @@ namespace Libreria.Data.MainModels
 {
     public partial class Encargo
     {
+        public Encargo()
+        {
+            DetalleEncargos = new HashSet<DetalleEncargo>();
+        }
+
         public int IdEncargo { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Abono { get; set; }
@@ -16,5 +21,6 @@ namespace Libreria.Data.MainModels
 
         public virtual Cliente? IdClienteNavigation { get; set; }
         public virtual Empleado? IdEmpleadoNavigation { get; set; }
+        public virtual ICollection<DetalleEncargo> DetalleEncargos { get; set; }
     }
 }

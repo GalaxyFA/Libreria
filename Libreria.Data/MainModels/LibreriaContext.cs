@@ -62,16 +62,12 @@ namespace Libreria.Data.MainModels
 
             modelBuilder.Entity<ClienteJuridico>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ClienteJuridico");
 
                 entity.Property(e => e.ApellidoRepresentante)
                     .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("Apellido_representante");
-
-                entity.Property(e => e.ClienteJuridicoId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.FechaConstitucion)
                     .HasColumnType("date")
@@ -88,18 +84,14 @@ namespace Libreria.Data.MainModels
                     .HasColumnName("Nombre_representante");
 
                 entity.HasOne(d => d.IdClienteNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ClienteJuridicos)
                     .HasForeignKey(d => d.IdCliente)
                     .HasConstraintName("FK__ClienteJu__IdCli__31EC6D26");
             });
 
             modelBuilder.Entity<ClienteNatural>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("ClienteNatural");
-
-                entity.Property(e => e.ClienteNaturalId).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.PrimerApellido)
                     .HasMaxLength(40)
@@ -122,7 +114,7 @@ namespace Libreria.Data.MainModels
                     .HasColumnName("Segundo_nombre");
 
                 entity.HasOne(d => d.IdClienteNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ClienteNaturals)
                     .HasForeignKey(d => d.IdCliente)
                     .HasConstraintName("FK__ClienteNa__IdCli__33D4B598");
             });
@@ -148,53 +140,50 @@ namespace Libreria.Data.MainModels
 
             modelBuilder.Entity<DetalleCompra>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.DetalleCompraslId).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.DetalleCompraslId)
+                    .HasName("DetalleCompras_PK");
 
                 entity.HasOne(d => d.IdCompraNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleCompras)
                     .HasForeignKey(d => d.IdCompra)
                     .HasConstraintName("FK__DetalleCo__IdCom__3F466844");
 
                 entity.HasOne(d => d.IdProductoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleCompras)
                     .HasForeignKey(d => d.IdProducto)
                     .HasConstraintName("FK__DetalleCo__IdPro__403A8C7D");
             });
 
             modelBuilder.Entity<DetalleEncargo>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.DetalleEncargolId)
+                    .HasName("DetalleEncargo_PK");
 
                 entity.ToTable("DetalleEncargo");
 
-                entity.Property(e => e.DetalleEncargolId).ValueGeneratedOnAdd();
-
                 entity.HasOne(d => d.IdEncagoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleEncargos)
                     .HasForeignKey(d => d.IdEncago)
                     .HasConstraintName("FK__DetalleEn__IdEnc__45F365D3");
 
                 entity.HasOne(d => d.IdProductoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleEncargos)
                     .HasForeignKey(d => d.IdProducto)
                     .HasConstraintName("FK__DetalleEn__IdPro__46E78A0C");
             });
 
             modelBuilder.Entity<DetalleVentum>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.DetalleVentalId).ValueGeneratedOnAdd();
+                entity.HasKey(e => e.DetalleVentalId)
+                    .HasName("DetalleVenta_PK");
 
                 entity.HasOne(d => d.IdProductoNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleVenta)
                     .HasForeignKey(d => d.IdProducto)
                     .HasConstraintName("FK__DetalleVe__IdPro__3A81B327");
 
                 entity.HasOne(d => d.IdVentaNavigation)
-                    .WithMany()
+                    .WithMany(p => p.DetalleVenta)
                     .HasForeignKey(d => d.IdVenta)
                     .HasConstraintName("FK__DetalleVe__IdVen__398D8EEE");
             });
