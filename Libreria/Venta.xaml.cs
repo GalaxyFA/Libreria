@@ -111,11 +111,12 @@ namespace Libreria
                 cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
                 i = ObtenerIDCliente();
                 cliNat.IdCliente = i;
-                //cliNat.IdClienteNavigation = cli;
+                cliNat.IdClienteNavigation = cli;
                 
                 Ventum v=RegistrarVenta(i);
 
                 CliNatRepository.Add(cliNat);
+                CliNatRepository.Savechange();
                 RegistrarDetalleVenta();
                 ActualizarTablaProducto();
                 Limpiar();
