@@ -12,7 +12,7 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              xmlns:MaterialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
         <StackPanel>
             <TextBlock Text="Información del Cliente" HorizontalAlignment="Center"/>
@@ -45,7 +45,7 @@
                 <TextBox x:Name="txt_Email" Width="300" Height="30" Margin="5,5,10,5" HorizontalAlignment="Left" MaterialDesign:HintAssist.Hint="Correo electronico"
                              MaterialDesign:HintAssist.IsFloating="True" FontSize="11" ></TextBox>
                 <TextBox x:Name="txt_Telefono" Width="175" Height="30" Margin="10,5,10,5" HorizontalAlignment="Left" MaterialDesign:HintAssist.Hint="Telefono"
-                             MaterialDesign:HintAssist.IsFloating="True" FontSize="11" ></TextBox>
+                             MaterialDesign:HintAssist.IsFloating="True" FontSize="11" KeyDown="txt_Telefono_KeyDown" MaxLength="8" ></TextBox>
             </StackPanel>
             <TextBlock Text="Lista de inventario" FontSize="16" HorizontalAlignment="Center"  Margin="0 5"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -55,7 +55,7 @@
                     <MaterialDesign:PackIcon Kind="Reload"/>
                 </Button>
             </StackPanel>
-            <DataGrid x:Name="dg_Inventario" IsReadOnly="True" Height="100" AutoGenerateColumns="False" Foreground="White" Background="AliceBlue">
+            <DataGrid x:Name="dg_Inventario" IsReadOnly="True" Height="150" AutoGenerateColumns="False" Foreground="White" Background="DarkViolet">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="Gray"/>
@@ -65,18 +65,18 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="columNombre" Header="_Nombre" Width="200" Binding="{Binding Nombre}"/>
+                    <DataGridTextColumn x:Name="columId" Header="  _Id" Width="50" Binding="{Binding IdProducto}"/>
+                    <DataGridTextColumn x:Name="columNombre" Header="_Nombre" Width="200" Binding="{Binding NombreProducto}"/>
                     <DataGridTextColumn x:Name="columPrecio" Header="_Precio" Width="100" Binding="{Binding Precio}" />
-                    <DataGridTextColumn x:Name="columDescripcion" Header="_Descripción" Width="300" Binding="{Binding Descripcion}"/>
                     <DataGridTextColumn x:Name="columCantidad" Header="_Cantidad" Width="70" Binding="{Binding Cantidad}"/>
-                    <DataGridTextColumn x:Name="columUPC" Header="_Código" Width="*" Binding="{Binding UPC}"/>
+                    <DataGridTextColumn x:Name="columUPC" Header="_Código" Width="*" Binding="{Binding Upc}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <MaterialDesign:PackIcon Kind="PackageVariantAdd" Width="50" Foreground="{Binding ElementName=tb_Com}" Margin="0 5"  />
                 <TextBlock x:Name="tb_Com" Text="Lista de encargo" FontSize="16" Margin="0 5"></TextBlock>
             </StackPanel>
-            <DataGrid x:Name="dg_Carrito_Compra" IsReadOnly="True" Height="170" AutoGenerateColumns="False" Foreground="White" Background="AliceBlue">
+            <DataGrid x:Name="dg_Carrito_Compra" IsReadOnly="True" Height="170" AutoGenerateColumns="False" Foreground="White" Background="BlueViolet">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="Gray"/>
@@ -86,17 +86,20 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="colId" Header="  _Id" Width="50" Binding="{Binding IdProducto}"/>
                     <DataGridTextColumn x:Name="colNombre" Header="_Nombre" Width="200" Binding="{Binding Nombre}"/>
                     <DataGridTextColumn x:Name="colPrecio" Header="_Precio" Width="100" Binding="{Binding Precio}" />
-                    <DataGridTextColumn x:Name="colDescripcion" Header="_Descripción" Width="300" Binding="{Binding Descripcion}"/>
                     <DataGridTextColumn x:Name="colCantidad" Header="_Cantidad" Width="70" Binding="{Binding Cantidad}"/>
-                    <DataGridTextColumn x:Name="colUPC" Header="_Código" Width="*" Binding="{Binding UPC}"/>
+                    <DataGridTextColumn x:Name="colUPC" Header="_Código" Width="*" Binding="{Binding Upc}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="text_Monto_" Text="Monto total :" FontSize="16" Height="20" Width="84" Margin="5 0"/>
-                <TextBox x:Name="txtCantidad" MaterialDesign:HintAssist.Hint="Cantidad" MaterialDesign:HintAssist.IsFloating="True" Margin="550,0,10,0"></TextBox>
-                <TextBox x:Name="txtAbono" MaterialDesign:HintAssist.Hint="Abono" MaterialDesign:HintAssist.IsFloating="True" Height="40" Width="67"/>
+                <TextBlock x:Name="text_Monto_" Text="Monto total :" FontSize="16" Height="20" Width="250" Margin="5 0"/>
+                <TextBox x:Name="txtCantidad" MaterialDesign:HintAssist.Hint="Cantidad" MaterialDesign:HintAssist.IsFloating="True" Margin="250,0,10,0" KeyDown="txtCantidad_KeyDown"></TextBox>
+                <TextBox x:Name="txtAbono" MaterialDesign:HintAssist.Hint="Abono" MaterialDesign:HintAssist.IsFloating="True" Height="40" Width="67" KeyDown="txtAbono_KeyDown"/>
+                <TextBox x:Name="txt_IdEmpleado" MaterialDesign:HintAssist.Hint="Id de EmPleado" 
+                         MaterialDesign:HintAssist.IsFloating="True" Margin="10,0,10,0" Height="40" Width="120" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="False"></TextBox>
+
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnRealizar_Encargo" Content="Realizar encargo" Margin="10 0 5 0" Background="#FF773DDE" Click="btnRealizar_Encargo_Click"></Button>
@@ -104,8 +107,8 @@
                 <Button x:Name="btnSacar_producto" Content="Sacar producto" Margin="5 0" Background="#FF773DDE" Click="btnSacar_producto_Click"></Button>
                 <Button x:Name="btnCancelar_encargo" Content="Cancelar encargo" Margin="5 0" Background="#FF773DDE" Click="btnCancelar_encargo_Click"></Button>
                 <StackPanel>
-                    <RadioButton Content="Efectivo" IsChecked="True" GroupName="Pago"></RadioButton>
-                    <RadioButton Content="Tarjeta" GroupName="Pago"></RadioButton>
+                    <RadioButton Content="Efectivo" Name="radEfectivo" IsChecked="True" GroupName="Pago"></RadioButton>
+                    <RadioButton Content="Tarjeta" Name="radTarjeta" GroupName="Pago"></RadioButton>
                 </StackPanel>
             </StackPanel>
 

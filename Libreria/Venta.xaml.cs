@@ -73,6 +73,7 @@ namespace Libreria
                 txt_Primer_Nombre.Visibility= Visibility.Visible;
                 txt_Segundo_Apellido.Visibility= Visibility.Visible;
                 txt_Segundo_Nombre.Visibility = Visibility.Visible;
+                Limpiar();
             }
             else if (cbTipo_Cliente.SelectedIndex == 1)
             {
@@ -85,6 +86,7 @@ namespace Libreria
                 txtNombre_representante.Visibility=Visibility.Visible;
                 txtNombre_cliente.Visibility = Visibility.Visible;
                 dp_Fecha_Consti.Visibility = Visibility.Visible;
+                Limpiar();
 
             }
         }
@@ -94,53 +96,80 @@ namespace Libreria
         private void btnRealizar_Compra_Click(object sender, RoutedEventArgs e)
         {
             int indiceVenta = 0;
+            if(dg_Carrito_Compras.ItemsSource!=null)
 
             if(cbTipo_Cliente.SelectedIndex==-1 || cbTipo_Cliente.SelectedIndex == 0)
-            {//Registar cliente
-                Cliente cli = new Cliente();
-                cli.Email = txt_Email.Text;
-                cli.Telefono = txt_Telefono.Text;
-                cli.Estado = "Activo";
-                RegistrarCliente(cli);//Contiene las lineas de CliRepository add y savechange
-                
-                ClienteNatural cliNat = new ClienteNatural();
-                cliNat.PrimerNombre = txt_Primer_Nombre.Text;
-                cliNat.SegundoNombre= txt_Segundo_Nombre.Text;
-                cliNat.PrimerApellido=txt_Primer_Apellido.Text;
-                cliNat.SegundoApellido= txt_Segundo_Apellido.Text;
-                indiceVenta = ObtenerIDCliente();
-                cliNat.IdCliente = indiceVenta;
-                //cliNat.IdClienteNavigation = cli;
-                
-                Ventum v=RegistrarVenta(indiceVenta);
+            {   //Registar cliente
+              if (txt_Primer_Nombre.Text != String.Empty && txt_Email.Text!= String.Empty && 
+                        txt_Telefono.Text!= String.Empty && txt_Primer_Apellido.Text != String.Empty)
+             {
+                        Cliente cli = new Cliente();
+                        cli.Email = txt_Email.Text;
+                        cli.Telefono = txt_Telefono.Text;
+                        cli.Estado = "Activo";
+                        RegistrarCliente(cli);//Contiene las lineas de CliRepository add y savechange
 
-                CliNatRepository.Add(cliNat);
-                CliNatRepository.Savechange();
-                RegistrarDetalleVenta();
-                ActualizarTablaProducto();
-                Limpiar();
-                ActualizarItem();
-             
-                MostrarLista();
+                        ClienteNatural cliNat = new ClienteNatural();
+                        cliNat.PrimerNombre = txt_Primer_Nombre.Text;
+                        cliNat.SegundoNombre = txt_Segundo_Nombre.Text;
+                        cliNat.PrimerApellido = txt_Primer_Apellido.Text;
+                        cliNat.SegundoApellido = txt_Segundo_Apellido.Text;
+                        indiceVenta = ObtenerIDCliente();
+                        cliNat.IdCliente = indiceVenta;
+                        //cliNat.IdClienteNavigation = cli;
 
+                        Ventum v = RegistrarVenta(indiceVenta);
 
-
+                        CliNatRepository.Add(cliNat);
+                        CliNatRepository.Savechange();
+                        RegistrarDetalleVenta();
+                        ActualizarTablaProducto();
+                        Limpiar();
+                        ActualizarItem();
+                        ActualizarMonto();
+                        MostrarLista();
+                        MessageBox.Show("Compra Realizada", "Informacion", MessageBoxButton.OK, MessageBoxImage.Information);
+             }
+              else
+              {
+                        MessageBox.Show("No puede dejar vacios", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+              }
             }
             else if (cbTipo_Cliente.SelectedIndex == 1)
             {
-                //Cliente cli = new Cliente();
-                //cli.Email = txt_Email.Text;
-                //cli.Telefono = txt_Telefono.Text;
-                //cli.Estado = "Activo";
-                //RegistrarCliente(cli);
-                // i = ObtenerIDCliente();
-                //ClienteJuridico cliJur = new ClienteJuridico();
-                //cliJur.NombreCliente = txtNombre_cliente.Text;
-                //cliJur.NombreRepresentante = txtNombre_representante.Text;
-                //cliJur.ApellidoRepresentante = txtApellido_representante.Text;
-                //cliJur.FechaConstitucion = (DateTime)dp_Fecha_Consti.SelectedDate!;
-                //cliJur.IdCliente = i;
-                //CliJurRepository.Add(cliJur);
+              if (txtNombre_cliente.Text != String.Empty && txt_Email.Text != String.Empty &&
+               txt_Telefono.Text != String.Empty && txtApellido_representante.Text != String.Empty
+               && txtNombre_representante.Text != String.Empty && dp_Fecha_Consti.SelectedDate != null)
+              {
+                        Cliente cli = new Cliente();
+                        cli.Email = txt_Email.Text;
+                        cli.Telefono = txt_Telefono.Text;
+                        cli.Estado = "Activo";
+                        RegistrarCliente(cli);
+                        indiceVenta = ObtenerIDCliente();
+                        ClienteJuridico cliJur = new ClienteJuridico();
+                        cliJur.NombreCliente = txtNombre_cliente.Text;
+                        cliJur.NombreRepresentante = txtNombre_representante.Text;
+                        cliJur.ApellidoRepresentante = txtApellido_representante.Text;
+                        cliJur.FechaConstitucion = (DateTime)dp_Fecha_Consti.SelectedDate;
+                        cliJur.IdCliente = indiceVenta;
+
+                        Ventum v = RegistrarVenta(indiceVenta);
+
+                        CliJurRepository.Add(cliJur);
+                        CliJurRepository.Savechange();
+                        RegistrarDetalleVenta();
+                        ActualizarTablaProducto();
+                        Limpiar();
+                        ActualizarItem();
+                        ActualizarMonto();
+                        MostrarLista();
+                        MessageBox.Show("Compra Realizada", "Informacion", MessageBoxButton.OK, MessageBoxImage.Information);
+              }
+            else
+             {
+                        MessageBox.Show("No puede dejar vacios", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             }
         }
 
@@ -166,8 +195,20 @@ namespace Libreria
         {
             if(dg_Inventario.SelectedIndex!= -1)
             {
-                int can = 0;
-                var Selected = (Producto)dg_Inventario.SelectedItem;
+                try
+                {
+                    int can = 0;
+                    var Selected = (Producto)dg_Inventario.SelectedItem;
+                    can = Convert.ToInt32(txtCantidad.Text);
+                    AddCarrito(Selected.IdProducto, Selected.NombreProducto, Selected.Precio, can, Selected.Upc);
+                    txtCantidad.Clear();
+                    ActualizarItem();
+                    ActualizarMonto();
+                }
+                catch (FormatException fe){
+                    MessageBox.Show(fe.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
                 //var Cantidad =  Convert.ToInt32(txtCantidad.Text);
 
                 //if (carrito == null)
@@ -180,14 +221,8 @@ namespace Libreria
                 //{
                 //AddOrUpadate(carrito, CarriProd);
                 //}
-                can = Convert.ToInt32(txtCantidad.Text);
-               // can = carrito.AddOrUpadate(ProdRepository.GetAll(), Selected, can);
-                AddCarrito(Selected.IdProducto, Selected.NombreProducto,Selected.Precio, can, Selected.Upc);
-                txtCantidad.Clear();
-                   
-                ActualizarItem();
-                ActualizarMonto();
                 
+               // can = carrito.AddOrUpadate(ProdRepository.GetAll(), Selected, can);
                
             }
         }
@@ -209,10 +244,12 @@ namespace Libreria
             {
                 if (Existe(idProducto) == true)
                 {
+                    can = ValidarCantidad(can);
                     Cambios(idProducto, can);
                 }
                 else
                 {
+                    can = ValidarCantidad(can);
                     Producto pro = new Producto();
                     pro.IdProducto = idProducto;
                     pro.NombreProducto = nombre;
@@ -222,6 +259,17 @@ namespace Libreria
                     carrito.Add(pro);
                 }
             }
+        }
+
+        private int ValidarCantidad(int can)
+        {
+            var selected =(Producto) dg_Inventario.SelectedItem;
+            if (selected.Cantidad <= can)
+            {
+                can = selected.Cantidad;
+                MessageBox.Show("Cantidad excede el inventario", "Aviso", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            return can;
         }
 
         private void btnSacar_Compra_Click(object sender, RoutedEventArgs e)
@@ -391,8 +439,9 @@ namespace Libreria
             txt_Primer_Nombre.Clear();
             txt_Segundo_Nombre.Clear();
             txt_Telefono.Clear();
-            dp_Fecha_Consti.DataContext = null;
+            dp_Fecha_Consti.SelectedDate = null;
             carrito.Clear();
+            total = 0;
             
         }
 
@@ -413,6 +462,34 @@ namespace Libreria
 
             return i;
 
+        }
+
+        private void txtCantidad_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                e.Handled = false;
+            else
+                e.Handled = true;
+        }
+
+        private void txt_Telefono_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+            { string tel = txt_Telefono.Text;
+                e.Handled = false;
+                if (txt_Telefono.Text.Trim().Length >= 8)
+                {
+                   
+                    MessageBox.Show("El Teléfono debe tener 8 dígitos");
+                    //txt_Telefono.Text = tel;
+                    
+                }
+            }
+            else
+                e.Handled = true;
+               
+            
+            
         }
     }
 }

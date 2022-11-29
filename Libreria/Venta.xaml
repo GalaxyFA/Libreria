@@ -12,7 +12,7 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}"
              xmlns:MaterialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
     <Grid>
         <StackPanel>
             <TextBlock Text="Información del Cliente" HorizontalAlignment="Center"/>
@@ -45,7 +45,7 @@
                 <TextBox x:Name="txt_Email" Width="300" Height="30" Margin="5,5,10,5" HorizontalAlignment="Left" MaterialDesign:HintAssist.Hint="Correo electronico"
                              MaterialDesign:HintAssist.IsFloating="True" FontSize="11" ></TextBox>
                 <TextBox x:Name="txt_Telefono" Width="175" Height="30" Margin="10,5,10,5" HorizontalAlignment="Left" MaterialDesign:HintAssist.Hint="Telefono"
-                             MaterialDesign:HintAssist.IsFloating="True" FontSize="11" ></TextBox>
+                             MaterialDesign:HintAssist.IsFloating="True" FontSize="11" KeyDown="txt_Telefono_KeyDown" MaxLength="8" ></TextBox>
             </StackPanel>
             <TextBlock Text="Lista de inventario" FontSize="16" HorizontalAlignment="Center"  Margin="0 5"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -95,7 +95,7 @@
             </DataGrid>
             <StackPanel Orientation="Horizontal" >
                 <TextBlock x:Name="text_Monto" Text="Monto total:" FontSize="16" Height="20" Width="160" Margin="5 0"/>
-                <TextBox x:Name="txtCantidad" MaterialDesign:HintAssist.Hint="Cantidad" MaterialDesign:HintAssist.IsFloating="True" Margin="630,0,10,0"></TextBox>
+                <TextBox x:Name="txtCantidad" MaterialDesign:HintAssist.Hint="Cantidad" MaterialDesign:HintAssist.IsFloating="True" Margin="630,0,10,0" KeyDown="txtCantidad_KeyDown"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnRealizar_Compra" Content="Realizar compra" Margin="10 0 5 0" Background="#FF773DDE" 
