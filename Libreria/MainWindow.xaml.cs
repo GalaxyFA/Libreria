@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
@@ -12,6 +13,7 @@ namespace Libreria
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -22,7 +24,7 @@ namespace Libreria
             //Console.WriteLine(res.Count);
             //Console.WriteLine(res[0].PrimerNombre);
         }
-
+        public SqlConnection connect = new SqlConnection();
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -40,41 +42,43 @@ namespace Libreria
 
         private void btnEntrar_Click(object sender, RoutedEventArgs e)
         {
-            //if (txtUsuario.Text == "Admin" && txtPasword.Password == "1234")
-            //{
-            //    lbInfo.Content = "Acceso permitido";
-            //    lbInfo.Foreground = Brushes.Green;
-            //    Llenar_Barra();
-            //}
-            //else
-            //{
-            //    lbInfo.Content = "Acceso Denegado";
-            //    lbInfo.Foreground = Brushes.Red;
-            //}
-            Principal principal = new Principal();
-            principal.Show();
-            this.Close();
-            //Llenar_Barra();
+            if (txtUsuario.Text == "Admin" && txtPasword.Password == "1234")
+            {
+                lbInfo.Content = "Acceso permitido";
+                lbInfo.Foreground = Brushes.Green;
+                Llenar_Barra();
+               
+            }
+            else
+            {
+                lbInfo.Content = "Acceso Denegado";
+                lbInfo.Foreground = Brushes.Red;
+            }
+          
+          
         }
 
         private void pbProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            //if (pbProgress.Value == 25)
-            //{
-            //    lbCarga.Content = "Cargando";
-            //}
-            //else if (pbProgress.Value == 50)
-            //{
-            //    lbCarga.Content = "Validando inicio de sesión";
-            //}
-            //else if (pbProgress.Value == 75)
-            //{
-            //    lbCarga.Content = "Cargando sistema";
-            //}
-            //else if (pbProgress.Value == 100)
-            //{
-            //}
-                
+            if (pbProgress.Value == 25)
+            {
+                lbCarga.Content = "Cargando";
+            }
+            else if (pbProgress.Value == 50)
+            {
+                lbCarga.Content = "Validando inicio de sesión";
+            }
+            else if (pbProgress.Value == 75)
+            {
+                lbCarga.Content = "Cargando sistema";
+            }
+            else if (pbProgress.Value == 100)
+            {
+                Principal principal = new Principal();
+                principal.Show();
+                this.Close();
+            }
+
         }
 
         private void txtPasword_KeyDown(object sender, KeyEventArgs e)
@@ -106,6 +110,8 @@ namespace Libreria
             worker.DoWork += new DoWorkEventHandler(Worker_Do_work);
             worker.ProgressChanged += new ProgressChangedEventHandler(Worker_progress);
             worker.RunWorkerAsync();
+           
+            
         }
 
         private void Worker_Do_work(object sender, DoWorkEventArgs e)

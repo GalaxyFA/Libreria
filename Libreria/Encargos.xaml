@@ -73,7 +73,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <MaterialDesign:PackIcon Kind="PackageVariantAdd" Width="50" Foreground="{Binding ElementName=tb_Com}" Margin="0 5"  />
+                <MaterialDesign:PackIcon Kind="PackageVariantAdd" Width="50" Margin="0 5"  />
                 <TextBlock x:Name="tb_Com" Text="Lista de encargo" FontSize="16" Margin="0 5"></TextBlock>
             </StackPanel>
             <DataGrid x:Name="dg_Carrito_Compra" IsReadOnly="True" Height="170" AutoGenerateColumns="False" Foreground="White" Background="BlueViolet">

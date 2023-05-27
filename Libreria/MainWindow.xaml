@@ -43,6 +43,10 @@
                     <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=txtPasword,Path=BorderBrush}" Width="35" Height="35" Margin="0 5" VerticalAlignment="Center"/>
                     <PasswordBox x:Name="txtPasword" Height="50" Width="300" materialDesign:HintAssist.Hint="Contraseña" materialDesign:HintAssist.IsFloating="True" FontSize="20" KeyDown="txtPasword_KeyDown"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10 0">
+                    <materialDesign:PackIcon Kind="Server" Width="35" Foreground="{Binding ElementName=txtUsuario, Path=BorderBrush}" Margin="0 5" Height="35" VerticalAlignment="Center" />
+                    <TextBox x:Name="txtServidor" Height="auto" Width="300" materialDesign:HintAssist.Hint="Servidor" materialDesign:HintAssist.IsFloating="True" FontSize="20" KeyDown="txtUsuario_KeyDown"/>
+                </StackPanel>
 
                 <Button x:Name="btnEntrar" BorderBrush="Transparent" Content="Entrar" Background="DarkViolet" Width="100" Height="40" HorizontalAlignment="Right" Margin="10 30" FontSize="20" Click="btnEntrar_Click"/>
                 <Label x:Name="lbInfo" FontSize="15" Content="" Height="25" Width="280" HorizontalAlignment="Right" Margin="30 10" VerticalAlignment="Top"/>
